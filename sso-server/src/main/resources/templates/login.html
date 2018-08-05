@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+    <script src="/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<form>
+    <input type="hidden" th:value="${preUrl}" id="preUrl"/>
+    <input type="text" id="username" value="test" /><br/>
+    <input type="password" value="123456" id="password"/>
+    <input type="button" value="登陆" onclick="login()"/>
+</form>
+</body>
+<script>
+    function login(){
+        $.ajax({
+            url:'/api/login',
+            data:{
+                username:$('#username').val(),
+                password:$('#password').val()
+            },
+            type:"post",
+            dataType:'json',
+            success:function (response) {
+                if(response.code === 200){
+                    alert('登陆成功,即将返回');
+                    window.location.href = $('#preUrl').val()+"?uuid="+response.uuid;
+                }else{
+                    alert(response.errMsg);
+                }
+            },
+            error:function () {
+                alert('登陆失败!');
+            }
+        });
+    }
+</script>
+</html>
