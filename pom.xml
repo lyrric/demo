@@ -15,7 +15,8 @@
 		<module>rabbit-mq</module>
 		<module>sso-client</module>
 		<module>sso-server</module>
-	</modules>
+        <module>zookeeper</module>
+    </modules>
 	<!-- Inherit defaults from Spring Boot -->
 	<build>
 		<plugins>

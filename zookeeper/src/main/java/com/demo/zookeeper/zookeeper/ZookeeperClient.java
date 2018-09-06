@@ -60,13 +60,15 @@ public class ZookeeperClient {
         }else{
             //获取上一个节点
             String preLockPath = nodes.get(index - 1);
-            Watcher watcher = event -> {
-                if(event.getType().equals(Watcher.Event.EventType.NodeDeleted)){
-                    System.out.println(appId + "检测到" + preLockPath + "被删除,重新尝试获取锁");
-                    synchronized(this){
-                        notifyAll();
+            final Watcher watcher = new Watcher() {
+                @Override
+                public void process(WatchedEvent watchedEvent) {
+                    if(watchedEvent.getType().equals(Watcher.Event.EventType.NodeDeleted)){
+                        System.out.println(appId + "检测到" + preLockPath + "被删除,重新尝试获取锁");
+                        synchronized(this){
+                            notifyAll();
+                        }
                     }
-
                 }
             };
             //判断上一个节点是否还存在,并监听事件
@@ -76,8 +78,8 @@ public class ZookeeperClient {
                 tryLock(lockPath);
             }else{
                 System.out.println(appId + "等待上一个节点:" + preLockPath + ",释放锁");
-                synchronized (this){
-                    this.wait();
+                synchronized (watcher){
+                    watcher.wait();
                 }
                 System.out.println(appId + "被唤醒");
                 tryLock(lockPath);
@@ -88,7 +90,7 @@ public class ZookeeperClient {
     /**
      * 释放锁
      */
-    public void realseLock(String lockPath) throws KeeperException, InterruptedException {
+    public void releaseLock(String lockPath) throws KeeperException, InterruptedException {
         zooKeeper.delete(lockPath, 0);
         System.out.println(appId + "释放锁:" + lockPath);
     }

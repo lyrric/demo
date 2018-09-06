@@ -21,7 +21,7 @@ public class ZookeeperApp {
                     zookeeperClient.init();
                     String lockPath = zookeeperClient.getLock();
                     Thread.sleep(1000);
-                    zookeeperClient.realseLock(lockPath);
+                    zookeeperClient.releaseLock(lockPath);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
