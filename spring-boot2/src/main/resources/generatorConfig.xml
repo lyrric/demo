@@ -6,8 +6,12 @@
 <generatorConfiguration>
 	<context id="context1" targetRuntime="MyBatis3">
 		<property name="javaFileEncoding" value="UTF-8"/>
-		<commentGenerator type="com.demo.spring.boot2.generator.MyCommentGenerator">
-		</commentGenerator>
+		<!--<commentGenerator type="com.bbd.csrc.listed.generator.MyCommentGenerator">-->
+		<!--</commentGenerator>-->
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+			<property name="mappers" value="com.demo.spring.boot2.mapper.manual.BaseMapper"/>
+		</plugin>
+
 		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
 			connectionURL="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;nullCatalogMeansCurrent=true&amp;serverTimezone=UTC"
 			userId="root" password="">
