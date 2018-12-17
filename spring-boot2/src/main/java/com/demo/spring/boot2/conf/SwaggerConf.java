@@ -24,14 +24,14 @@ public class SwaggerConf {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.bbd.csrc.listed"))
+                .apis(RequestHandlerSelectors.basePackage("com.demo.spring.boot2.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-                .title("证监会-上市公司")
+                .title("swagger-ui->o(╯□╰)o")
                 .build();
     }
 }
