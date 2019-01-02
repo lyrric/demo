@@ -1,13 +1,11 @@
 package com.demo.spring.boot2.controller;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.demo.spring.boot2.entity.User;
 import com.demo.spring.boot2.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.sql.DataSource;
+import javax.annotation.Resource;
 
 /**
  * @author wangxiaodong
@@ -16,16 +14,12 @@ import javax.sql.DataSource;
 @RestController
 public class TestController {
 
-    @Autowired
-    DataSource dataSource;
-
-    @Autowired
-    UserService userService;
+    @Resource
+    private UserService userServiceImpl;
 
     @GetMapping(value = "/test")
-    User index(){
-        User user = userService.findById(1);
-        return user;
+    User index(int id){
+        return userServiceImpl.findById(id);
     }
 
 

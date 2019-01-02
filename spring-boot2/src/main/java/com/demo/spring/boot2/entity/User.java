@@ -3,6 +3,7 @@ package com.demo.spring.boot2.entity;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created on 2018/6/7.
@@ -10,7 +11,7 @@ import javax.persistence.*;
  * @author wangxiaodong
  */
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
