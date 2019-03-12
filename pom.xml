@@ -16,7 +16,8 @@
 		<module>sso-client</module>
 		<module>sso-server</module>
         <module>zookeeper</module>
-    </modules>
+		<module>websocket</module>
+	</modules>
 	<!-- Inherit defaults from Spring Boot -->
 	<build>
 		<plugins>
