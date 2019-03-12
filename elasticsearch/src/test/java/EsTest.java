@@ -45,8 +45,7 @@ public class EsTest {
         BoolQueryBuilder queryBuilders = QueryBuilders.boolQuery()
                 .must(QueryBuilders.matchPhraseQuery("username","测试"));
         SearchRequestBuilder requestBuilder = client.prepareSearch(EsEnum.INDEX.getValue())
-                .setQuery(queryBuilders)
-                .setTypes(null);
+                .setQuery(queryBuilders);
         SearchResponse response = requestBuilder.get();
         SearchHit[] hits = response.getHits().getHits();
 

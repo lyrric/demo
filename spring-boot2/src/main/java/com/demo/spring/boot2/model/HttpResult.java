@@ -1,21 +1,32 @@
-package com.demo.spring.boot2.util;
+package com.demo.spring.boot2.model;
+
+import lombok.Data;
 
 /**
  * 响应封装
  */
+@Data
 public class HttpResult {
-
-    private final static int SUCCESS_CODE = 1;
-    private final static int FAILURE_CODE = -1;
+    /**
+     * 成功代码
+     */
+    private final static int SUCCESS_CODE = 0;
+    /**
+     * 业务异常
+     */
+    private final static int BUSINESS_EXCEPTION_CODE = 1;
+    /**
+     * 未知异常
+     */
+    private final static int UNKNOWN_EXCEPTION_CODE = 2;
+    /**
+     * 成功
+     */
     private final static boolean SUCCESS_STATUS = true;
+    /**
+     * 失败
+     */
     private final static boolean FAILURE_STATUS = false;
-
-    private HttpResult(boolean success, int code, String msg, Object data) {
-        this.success = success;
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
-    }
 
     /**
      * 响应码。
@@ -24,14 +35,12 @@ public class HttpResult {
     private Integer code;
 
     /**
-     * 响应信息
+     * 错误信息
      */
-    private String msg;
+    private String errMsg;
 
     /**
-     * 是否成功。
-     * 当系统抛出预料之外的异常的时候，这个值为false,
-     * 其他情况这个值都是true。
+     * 是否成功
      */
     private Boolean success;
 
@@ -40,35 +49,10 @@ public class HttpResult {
      */
     private Object data;
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
+    private HttpResult(boolean success, int code, String errMsg, Object data) {
         this.success = success;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
+        this.code = code;
+        this.errMsg = errMsg;
         this.data = data;
     }
 
@@ -106,22 +90,17 @@ public class HttpResult {
 
     /**
      * 响应请求失败
-     * @param msg 失败信息
+     * @param errMsg 失败信息
      * @return 响应
      */
-    public static HttpResult failure(String msg) {
-        return failure(SUCCESS_STATUS, FAILURE_CODE, msg,null);
+    public static HttpResult failure(String errMsg) {
+        return failure(SUCCESS_STATUS, BUSINESS_EXCEPTION_CODE, errMsg,null);
     }
-
     /**
      * 出现预料之外的错误
      * @return 错误信息
      */
     public static HttpResult error() {
-        return failure(FAILURE_STATUS, FAILURE_CODE, "系统出现了一点小问题",null);
-    }
-
-    public static HttpResult error(String msg) {
-        return failure(FAILURE_STATUS, FAILURE_CODE, msg,null);
+        return failure(FAILURE_STATUS, UNKNOWN_EXCEPTION_CODE, "系统错误",null);
     }
 }

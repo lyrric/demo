@@ -1,4 +1,4 @@
-package com.demo.spring.boot2.util;
+package com.demo.spring.boot2.model;
 
 import com.github.pagehelper.Page;
 import lombok.Data;
