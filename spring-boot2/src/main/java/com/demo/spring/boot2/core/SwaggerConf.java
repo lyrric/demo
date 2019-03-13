@@ -1,4 +1,4 @@
-package com.demo.spring.boot2.conf;
+package com.demo.spring.boot2.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

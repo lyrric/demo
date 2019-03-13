@@ -9,7 +9,7 @@
 		<!--<commentGenerator type="com.bbd.csrc.listed.generator.MyCommentGenerator">-->
 		<!--</commentGenerator>-->
 		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-			<property name="mappers" value="com.demo.spring.boot2.mapper.manual.BaseMapper"/>
+			<property name="mappers" value="com.demo.spring.boot2.core.BaseMapper"/>
 		</plugin>
 
 		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"

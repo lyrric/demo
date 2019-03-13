@@ -1,5 +1,6 @@
 package com.demo.spring.boot2.mapper.manual;
 
+import com.demo.spring.boot2.core.BaseMapper;
 import com.demo.spring.boot2.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,6 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author wangxiaodong
  */
 @Mapper
-public interface UserExtMapper extends BaseMapper<User>{
+public interface UserExtMapper extends BaseMapper<User> {
 
 }
