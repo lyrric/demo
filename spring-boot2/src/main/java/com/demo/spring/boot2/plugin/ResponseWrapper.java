@@ -1,7 +1,11 @@
 package com.demo.spring.boot2.plugin;
 
 import com.demo.spring.boot2.model.HttpResult;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @ControllerAdvice(annotations = {Controller.class, RestController.class})
 public class ResponseWrapper implements ResponseBodyAdvice<Object> {
 
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
@@ -29,9 +34,17 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter,
                                   MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass,
                                   ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        if(null == o){
-            return HttpResult.success(null);
+        if(o instanceof HttpRequest){
+            return o;
         }
-        return HttpResult.success(o);
+        if(o instanceof String){
+            try {
+                return objectMapper.writeValueAsString(HttpResult.success(o));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return o;
     }
 }

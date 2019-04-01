@@ -22,5 +22,9 @@ public class TestController {
         return userServiceImpl.findById(id);
     }
 
+    @GetMapping(value = "string")
+    String returnStr(){
+        return "123123";
+    }
 
 }
