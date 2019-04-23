@@ -1,11 +1,9 @@
 package com.demo.spring.boot2.plugin;
 
 import com.demo.spring.boot2.model.HttpResult;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -34,7 +32,13 @@ public class ResponseWrapper implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter,
                                   MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass,
                                   ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        if(o instanceof HttpRequest){
+        //swagger接口不封装返回数据
+        String path = serverHttpRequest.getURI().getPath();
+        if("/swagger-resources".equals(path) || "  /v2/api-docs".equals(path)){
+            return o;
+        }
+        //避免二次封装
+        if(o instanceof HttpResult){
             return o;
         }
         if(o instanceof String){
